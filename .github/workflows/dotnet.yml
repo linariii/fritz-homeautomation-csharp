@@ -23,5 +23,5 @@ jobs:
       run: nuget restore Fritz.HomeAutomation.sln
     
     - name: Build the Solution
-      run: msbuild Fritz.HomeAutomation.sln
+      run: msbuild Fritz.HomeAutomation.sln /p:Configuration=Release
     
