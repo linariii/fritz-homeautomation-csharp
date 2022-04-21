@@ -32,9 +32,8 @@ jobs:
       with:  
         draft: false
         prerelease: false
-        release_name: ${{ steps.version.outputs.version }}
-        tag_name: ${{ github.ref }}
-        body_path: CHANGELOG.md
+        release_name: ${{ github.ref_name }}
+        tag_name: ${{ github.ref_name }}
       
     - name: Zip Release
       uses: TheDoctor0/zip-release@0.6.2
@@ -51,5 +50,4 @@ jobs:
         asset_content_type: application/zip
     
     - name: Publish
-      if: startsWith(github.ref, 'refs/heads/release')
       run: nuget push **\*.nupkg -Source 'https://api.nuget.org/v3/index.json' -ApiKey ${{secrets.NUGET_API_KEY}}
