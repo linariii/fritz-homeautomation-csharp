@@ -32,14 +32,14 @@ jobs:
       with:  
         draft: false
         prerelease: false
-        release_name: ${{ github.ref_name }}
-        tag_name: ${{ github.ref_name }}
+        release_name: Release ${{ github.ref }}
+        tag_name: ${{ github.ref }}
       
     - name: Zip Release
       uses: TheDoctor0/zip-release@0.6.2
       with:
         path: ./bin/Release
-        exclusions: *.nupkg
+        exclusions: '*.nupkg'
     - name: upload windows artifact
       uses: actions/upload-release-asset@v1
       env:
