@@ -39,7 +39,7 @@ jobs:
       uses: TheDoctor0/zip-release@0.6.2
       with:
         path: ./bin/Release
-        exclusions: '*.nupkg'
+        recursive_exclusions: '*.nupkg'
     - name: upload windows artifact
       uses: actions/upload-release-asset@v1
       env:
