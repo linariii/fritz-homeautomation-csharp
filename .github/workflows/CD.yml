@@ -1,9 +1,9 @@
 name: CD
 
 on:
-  create:
-    branches: 
-      - release/**
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -31,6 +31,32 @@ jobs:
     
     - name: Build the Solution
       run: msbuild Fritz.HomeAutomation.sln /p:Configuration=Release /p:version=$BUILD_VERSION
+    
+    - name: release
+      uses: actions/create-release@v1
+      id: create_release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:  
+        draft: false
+        prerelease: false
+        release_name: ${{ steps.version.outputs.version }}
+        tag_name: ${{ github.ref }}
+        body_path: CHANGELOG.md
+      
+    - name: Zip Release
+      uses: TheDoctor0/zip-release@0.6.2
+      with:
+        path: ./bin/Release
+    - name: upload windows artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/Release/release.zip
+        asset_name: release.zip
+        asset_content_type: application/zip
     
     - name: Publish
       if: startsWith(github.ref, 'refs/heads/release')
