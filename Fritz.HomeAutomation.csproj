@@ -2,13 +2,20 @@
   <PropertyGroup>
     <PackageProjectUrl>https://github.com/linariii/fritz-homeautomation-csharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/linariii/fritz-homeautomation-csharp</RepositoryUrl>
-    <PackageTags>Fritz HomeAutomation</PackageTags>
+    <PackageTags>Fritz Home Automation Dect AVM</PackageTags>
     <Copyright>Copyright © linariii 2021</Copyright>
 	<TargetFrameworks>net472</TargetFrameworks>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<AssemblyVersion>1.0.0.1</AssemblyVersion>
+	<FileVersion>1.0.0.1</FileVersion>
+	<PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   <ItemGroup>
     <None Remove=".gitignore" />
-    <None Remove="LICENSE" />
+  </ItemGroup>
+  <ItemGroup>
+	  <None Include="LICENSE" Pack="true" PackagePath="" />
+	  <None Include="README.md" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
