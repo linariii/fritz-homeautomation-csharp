@@ -6,24 +6,15 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlRoot("devicelist")]
-    public partial class Devicelist
+    public class DeviceList
     {
         [XmlElement("device")]
-        public List<Device> Devices
-        {
-            get; set;
-        }
+        public List<Device> Devices { get; set; }
 
         [XmlAttribute("version")]
-        public int Version
-        {
-            get; set;
-        }
+        public int Version { get; set; }
 
         [XmlAttribute("fwversion")]
-        public decimal Fwversion
-        {
-            get; set;
-        }
+        public decimal FwVersion { get; set; }
     }
 }

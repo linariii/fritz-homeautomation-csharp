@@ -6,7 +6,7 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class Device
+    public class Device
     {
         [XmlElement("present")]
         public byte Present { get; set; }
@@ -21,16 +21,16 @@ namespace Fritz.HomeAutomation.Models
         public int Battery { get; set; }
 
         [XmlElement("batterylow")]
-        public byte Batterylow { get; set; }
+        public byte BatteryLow { get; set; }
 
         [XmlElement("switch")]
         public DeviceSwitch Switch { get; set; }
 
         [XmlElement("simpleonoff")]
-        public DeviceSimpleonoff Simpleonoff { get; set; }
+        public DeviceSimpleOnOff SimpleOnOff { get; set; }
 
         [XmlElement("powermeter")]
-        public DevicePowermeter Powermeter { get; set; }
+        public DevicePowerMeter PowerMeter { get; set; }
 
         [XmlElement("temperature")]
         public DeviceTemperature Temperature { get; set; }
@@ -51,15 +51,27 @@ namespace Fritz.HomeAutomation.Models
         public int Id { get; set; }
 
         [XmlAttribute("functionbitmask")]
-        public string Functionbitmask { get; set; }
+        public string FunctionBitMask { get; set; }
 
         [XmlAttribute("fwversion")]
-        public decimal Fwversion { get; set; }
+        public decimal FwVersion { get; set; }
 
         [XmlAttribute("manufacturer")]
         public string Manufacturer { get; set; }
 
         [XmlAttribute("productname")]
-        public string Productname { get; set; }
+        public string ProductName { get; set; }
+
+        [XmlIgnore]
+        public Functions? Functions
+        {
+            get
+            {
+                if (int.TryParse(FunctionBitMask, out var value))
+                    return (Functions)value;
+
+                return null;
+            }
+        }
     }
 }

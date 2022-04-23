@@ -5,10 +5,12 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class SessionInfoRights
+    public class SessionInfoRights
     {
+        [XmlElement("Name")]
         public string Name { get; set; }
 
+        [XmlElement("Access")]
         public int Access { get; set; }
     }
 }

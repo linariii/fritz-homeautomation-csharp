@@ -6,16 +6,21 @@ namespace Fritz.HomeAutomation.Models
     [Serializable]
     [XmlType(AnonymousType = true)]
     [XmlRoot(Namespace = "", IsNullable = false)]
-    public partial class SessionInfo
+    public class SessionInfo
     {
-        public string SID { get; set; }
+        [XmlElement("SID")]
+        public string Sid { get; set; }
 
+        [XmlElement("Challenge")]
         public string Challenge { get; set; }
 
+        [XmlElement("BlockTime")]
         public byte BlockTime { get; set; }
 
+        [XmlElement("Rights")]
         public SessionInfoRights Rights { get; set; }
 
+        [XmlElement("Users")]
         public SessionInfoUsers Users { get; set; }
     }
 }

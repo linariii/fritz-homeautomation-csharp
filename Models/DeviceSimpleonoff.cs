@@ -5,7 +5,7 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DeviceSimpleonoff
+    public class DeviceSimpleOnOff
     {
         [XmlElement("state")]
         public byte State { get; set; }

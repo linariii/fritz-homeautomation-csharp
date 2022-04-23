@@ -5,13 +5,13 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DeviceButton
+    public class DeviceButton
     {
         [XmlElement("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [XmlElement("lastpressedtimestamp")]
-        public string Lastpressedtimestamp { get; set; }
+        public string LastPressedTimestamp { get; set; }
 
         [XmlAttribute("identifier")]
         public string Identifier { get; set; }

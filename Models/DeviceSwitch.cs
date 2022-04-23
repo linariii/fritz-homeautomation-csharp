@@ -5,7 +5,7 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DeviceSwitch
+    public class DeviceSwitch
     {
         [XmlElement("state")]
         public byte State { get; set; }
@@ -17,7 +17,7 @@ namespace Fritz.HomeAutomation.Models
         public byte Lock { get; set; }
 
         [XmlElement("devicelock")]
-        public byte Devicelock { get; set; }
+        public byte DeviceLock { get; set; }
     }
 
 }

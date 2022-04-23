@@ -5,7 +5,7 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DevicePowermeter
+    public class DevicePowerMeter
     {
         [XmlElement("voltage")]
         public int Voltage { get; set; }

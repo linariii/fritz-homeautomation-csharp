@@ -5,55 +5,54 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DeviceHkr
+    public class DeviceHkr
     {
         [XmlElement("tist")]
-        public byte Tist { get; set; }
+        public byte TempCurrent { get; set; }
 
         [XmlElement("tsoll")]
-        public byte Tsoll { get; set; }
+        public byte TempTarget { get; set; }
 
         [XmlElement("absenk")]
-        public byte Absenk { get; set; }
+        public byte TempNight { get; set; }
 
         [XmlElement("komfort")]
-        public byte Komfort { get; set; }
+        public byte TempComfort { get; set; }
 
         [XmlElement("lock")]
         public byte Lock { get; set; }
 
         [XmlElement("devicelock")]
-        public byte Devicelock { get; set; }
+        public byte DeviceLock { get; set; }
 
         [XmlElement("errorcode")]
-        public byte Errorcode { get; set; }
+        public byte ErrorCode { get; set; }
 
         [XmlElement("windowopenactiv")]
-        public byte Windowopenactiv { get; set; }
+        public byte WindowOpenActive { get; set; }
 
         [XmlElement("windowopenactiveendtime")]
-        public byte Windowopenactiveendtime { get; set; }
+        public byte WindowOpenActiveEndTime { get; set; }
 
         [XmlElement("boostactive")]
-        public byte Boostactive { get; set; }
+        public byte BoostActive { get; set; }
 
         [XmlElement("boostactiveendtime")]
-        public byte Boostactiveendtime { get; set; }
+        public byte BoostActiveEndTime { get; set; }
 
         [XmlElement("batterylow")]
-        public byte Batterylow { get; set; }
+        public byte BatteryLow { get; set; }
 
         [XmlElement("battery")]
         public byte Battery { get; set; }
 
         [XmlElement("nextchange")]
-        public DeviceHkrNextchange Nextchange { get; set; }
+        public DeviceHkrNextChange NextChange { get; set; }
 
         [XmlElement("summeractive")]
-        public byte Summeractive { get; set; }
+        public byte SummerActive { get; set; }
 
         [XmlElement("holidayactive")]
-        public byte Holidayactive { get; set; }
+        public byte HolidayActive { get; set; }
     }
 }
-

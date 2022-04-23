@@ -5,19 +5,12 @@ namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
     [XmlType(AnonymousType = true)]
-    public partial class DeviceHkrNextchange
+    public  class DeviceHkrNextChange
     {
         [XmlElement("endperiod")]
-        public int Endperiod
-        {
-            get; set;
-        }
+        public int EndPeriod { get; set; }
 
         [XmlElement("tchange")]
-        public byte Tchange
-        {
-            get; set;
-        }
+        public byte TChange { get; set; }
     }
 }
-
