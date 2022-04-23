@@ -3,7 +3,7 @@
     <PackageProjectUrl>https://github.com/linariii/fritz-homeautomation-csharp</PackageProjectUrl>
     <RepositoryUrl>https://github.com/linariii/fritz-homeautomation-csharp</RepositoryUrl>
     <PackageTags>Fritz Home Automation Dect AVM</PackageTags>
-    <Copyright>Copyright © linariii 2021</Copyright>
+    <Copyright>Copyright © linariii 2022</Copyright>
 	<TargetFrameworks>net472;netstandard2.0;net48;netstandard2.1;net47;net471;net46</TargetFrameworks>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
