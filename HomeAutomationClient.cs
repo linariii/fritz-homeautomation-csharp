@@ -527,7 +527,7 @@ namespace Fritz.HomeAutomation
 
         private async Task<string> DownloadString(string url)
         {
-            using (var client = new System.Net.WebClient())
+            using (var client = new System.Net.WebClient { Encoding = Encoding.UTF8 })
             {
                 return await client.DownloadStringTaskAsync(url);
             }
