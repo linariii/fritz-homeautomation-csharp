@@ -60,7 +60,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchlist");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchlist"));
             return string.IsNullOrEmpty(response)
                 ? null
                 : response.Split(',');
@@ -76,7 +76,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getdevicelistinfos");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getdevicelistinfos"));
             var result = string.IsNullOrEmpty(response)
                 ? null
                 : response.Deserialize<DeviceList>();
@@ -111,7 +111,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchstate&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchstate", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -132,7 +132,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=setswitchon&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchon", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -153,7 +153,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchpresent&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchpresent", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -174,7 +174,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=setswitchoff&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchoff", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -195,7 +195,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=setswitchtoggle&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchtoggle", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -216,7 +216,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchpower&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchpower", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -237,7 +237,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchpower&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchenergy", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -258,7 +258,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            return await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getswitchname&ain={ain}");
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchname", ain));
 
         }
 
@@ -273,7 +273,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=gettemperature&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gettemperature", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -294,7 +294,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getdeviceinfos&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getdeviceinfos", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -315,7 +315,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=getbasicdevicestats&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getbasicdevicestats", ain));
             if (string.IsNullOrEmpty(response))
                 return null;
 
@@ -336,12 +336,12 @@ namespace Fritz.HomeAutomation
         {
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
-            
+
             //toggle state if invalid state if used
             if (state < 0 || state > 2)
                 state = 2;
 
-            return await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=setsimpleonoff&ain={ain}&onoff={state}");
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setsimpleonoff", ain, $"onoff={state}"));
         }
 
         /// <summary>
@@ -355,7 +355,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=gethkrtsoll&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrtsoll", ain));
             return string.IsNullOrEmpty(response)
                 ? null
                 : ApiToTemp(response);
@@ -372,7 +372,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=gethkrkomfort&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrkomfort", ain));
             return string.IsNullOrEmpty(response)
                 ? null
                 : ApiToTemp(response);
@@ -389,7 +389,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=gethkrabsenk&ain={ain}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrabsenk", ain));
             return string.IsNullOrEmpty(response)
                 ? null
                 : ApiToTemp(response);
@@ -407,7 +407,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=sethkrboost&ain={ain}&endtimestamp={TimeToApi(duration)}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrboost", ain, $"endtimestamp={TimeToApi(duration)}"));
             return ApiToDatetime(response);
         }
 
@@ -423,7 +423,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=sethkrwindowopen&ain={ain}&endtimestamp={TimeToApi(duration)}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrwindowopen", ain, $"endtimestamp={TimeToApi(duration)}"));
             return ApiToDatetime(response);
         }
 
@@ -439,7 +439,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
                 return null;
 
-            var response = await DownloadString($"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd=sethkrtsoll&ain={ain}&param={TempToApi(temperature)}");
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrtsoll", ain, $"param={TempToApi(temperature)}"));
             return string.IsNullOrEmpty(response)
                 ? null
                 : ApiToTemp(response);
@@ -487,7 +487,6 @@ namespace Fritz.HomeAutomation
                 return null;
 
             return (int)Math.Round(Math.Min(Math.Max(val, minTemp), maxTemp), 0) * 2;
-
         }
 
         private string ApiToTemp(string temperature)
@@ -531,6 +530,21 @@ namespace Fritz.HomeAutomation
             {
                 return await client.DownloadStringTaskAsync(url);
             }
+        }
+
+        private string GetHomeAutoSwitchUrl(string sid, string command)
+        {
+            return $"{BaseUrl}/webservices/homeautoswitch.lua?sid={sid}&switchcmd={command}";
+        }
+
+        private string GetHomeAutoSwitchUrl(string sid, string command, string ain)
+        {
+            return $"{GetHomeAutoSwitchUrl(sid, command)}&ain={ain}";
+        }
+
+        private string GetHomeAutoSwitchUrl(string sid, string command, string ain, string parameter)
+        {
+            return $"{GetHomeAutoSwitchUrl(sid, command, ain)}&{parameter}";
         }
     }
 }
