@@ -96,7 +96,7 @@ namespace Fritz.HomeAutomation
                 return null;
 
             var devices = await GetDevices(sid);
-            return devices.Where(d => d.Functions.HasValue && d.Functions.Value.HasFlag(filter)).ToList();
+            return devices?.Where(d => d.Functions.HasValue && d.Functions.Value.HasFlag(filter)).ToList();
         }
 
 
