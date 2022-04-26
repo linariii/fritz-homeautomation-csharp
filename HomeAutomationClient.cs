@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using Fritz.HomeAutomation.Extensions;
 using Fritz.HomeAutomation.Models;
 using System.Security.Cryptography;
@@ -30,10 +31,21 @@ namespace Fritz.HomeAutomation
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string> GetSid(string username, string password)
         {
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
-                return null;
+            if (username == null)
+                throw new ArgumentNullException(nameof(username));
+
+            if (password == null)
+                throw new ArgumentNullException(nameof(password));
+
+            if (string.IsNullOrWhiteSpace(username))
+                throw new ArgumentException($"{nameof(username)} cannot be empty", nameof(username));
+
+            if (string.IsNullOrWhiteSpace(password))
+                throw new ArgumentException($"{nameof(password)} cannot be empty", nameof(password));
 
             var result = await DownloadString($"{BaseUrl}/login_sid.lua?username={username}");
             if (string.IsNullOrEmpty(result))
@@ -55,10 +67,15 @@ namespace Fritz.HomeAutomation
         /// </summary>
         /// <param name="sid">Session ID</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string[]> GetSwitchList(string sid)
         {
-            if (string.IsNullOrEmpty(sid))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchlist"));
             return string.IsNullOrEmpty(response)
@@ -71,10 +88,15 @@ namespace Fritz.HomeAutomation
         /// </summary>
         /// <param name="sid">Session ID</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<List<Device>> GetDevices(string sid)
         {
-            if (string.IsNullOrEmpty(sid))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getdevicelistinfos"));
             var result = string.IsNullOrEmpty(response)
@@ -90,10 +112,15 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="filter">filter</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<List<Device>> GetFilteredDevices(string sid, Functions filter)
         {
-            if (string.IsNullOrEmpty(sid))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
 
             var devices = await GetDevices(sid);
             return devices?.Where(d => d.Functions.HasValue && d.Functions.Value.HasFlag(filter)).ToList();
@@ -106,10 +133,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns>0 = deactivated, 1 = activated</returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> GetSwitchState(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchstate", ain));
             if (string.IsNullOrEmpty(response))
@@ -127,10 +165,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device Identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> SetSwitchOn(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchon", ain));
             if (string.IsNullOrEmpty(response))
@@ -148,10 +197,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device Identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> GetSwitchPresent(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchpresent", ain));
             if (string.IsNullOrEmpty(response))
@@ -169,10 +229,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> SetSwitchOff(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchoff", ain));
             if (string.IsNullOrEmpty(response))
@@ -190,10 +261,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> SetSwitchToggle(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "setswitchtoggle", ain));
             if (string.IsNullOrEmpty(response))
@@ -211,10 +293,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> GetSwitchPower(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchpower", ain));
             if (string.IsNullOrEmpty(response))
@@ -232,10 +325,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device Identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<int?> GetSwitchEnergy(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchenergy", ain));
             if (string.IsNullOrEmpty(response))
@@ -253,10 +357,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
-        public async Task<string> GetSwitchnNme(string sid, string ain)
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public async Task<string> GetSwitchnName(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             return await DownloadString(GetHomeAutoSwitchUrl(sid, "getswitchname", ain));
 
@@ -268,10 +383,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<double?> GetTemperature(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gettemperature", ain));
             if (string.IsNullOrEmpty(response))
@@ -289,10 +415,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<Device> GetDeviceInfos(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getdeviceinfos", ain));
             if (string.IsNullOrEmpty(response))
@@ -310,10 +447,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<DeviceStats> GetBasicDeviceStats(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "getbasicdevicestats", ain));
             if (string.IsNullOrEmpty(response))
@@ -332,14 +480,28 @@ namespace Fritz.HomeAutomation
         /// <param name="ain">Device identifier</param>
         /// <param name="state">0 = off, 1 = on, 2 = toggle</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task<string> SetSimpleOnOff(string sid, string ain, int state)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
 
-            //toggle state if invalid state if used
-            if (state < 0 || state > 2)
-                state = 2;
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            if (state < 0)
+                throw new ArgumentOutOfRangeException($"{nameof(state)} musst be 0=off, 1=on or 2=toggle", nameof(state));
+
+            if (state > 2)
+                throw new ArgumentOutOfRangeException($"{nameof(state)} musst be 0=off, 1=on or 2=toggle", nameof(state));
 
             return await DownloadString(GetHomeAutoSwitchUrl(sid, "setsimpleonoff", ain, $"onoff={state}"));
         }
@@ -350,10 +512,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string> GetTempTarget(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrtsoll", ain));
             return string.IsNullOrEmpty(response)
@@ -367,10 +540,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string> GetTempComfort(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrkomfort", ain));
             return string.IsNullOrEmpty(response)
@@ -384,10 +568,21 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string> GetTempNigh(string sid, string ain)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrabsenk", ain));
             return string.IsNullOrEmpty(response)
@@ -402,10 +597,28 @@ namespace Fritz.HomeAutomation
         /// <param name="ain">Device identifier</param>
         /// <param name="duration">in minutes (max. 24h)</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task<DateTime?> SetHkrBoost(string sid, string ain, int duration)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            if (duration <= 0)
+                throw new ArgumentOutOfRangeException($"{nameof(duration)} musst be at least one minute", nameof(duration));
+
+            if (duration > 14440)
+                throw new ArgumentOutOfRangeException($"{nameof(duration)} cannot exceed 24 hours", nameof(duration));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrboost", ain, $"endtimestamp={TimeToApi(duration)}"));
             return ApiToDatetime(response);
@@ -418,10 +631,28 @@ namespace Fritz.HomeAutomation
         /// <param name="ain">Device identifier</param>
         /// <param name="duration">in minutes (max. 24h)</param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public async Task<DateTime?> SetHkrWindowOpen(string sid, string ain, int duration)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            if (duration <= 0)
+                throw new ArgumentOutOfRangeException($"{nameof(duration)} musst be at least one minute", nameof(duration));
+
+            if (duration > 14440)
+                throw new ArgumentOutOfRangeException($"{nameof(duration)} cannot exceed 24 hours", nameof(duration));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrwindowopen", ain, $"endtimestamp={TimeToApi(duration)}"));
             return ApiToDatetime(response);
@@ -434,10 +665,27 @@ namespace Fritz.HomeAutomation
         /// <param name="ain">Device identifier</param>
         /// <param name="temperature"></param>
         /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<string> SetTempTarget(string sid, string ain, string temperature)
         {
-            if (string.IsNullOrEmpty(sid) || string.IsNullOrEmpty(ain))
-                return null;
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            if (temperature == null)
+                throw new ArgumentNullException(nameof(temperature));
+
+            if (string.IsNullOrWhiteSpace(temperature))
+                throw new ArgumentException($"{nameof(temperature)} cannot be empty", nameof(temperature));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrtsoll", ain, $"param={TempToApi(temperature)}"));
             return string.IsNullOrEmpty(response)
@@ -526,7 +774,7 @@ namespace Fritz.HomeAutomation
 
         private async Task<string> DownloadString(string url)
         {
-            using (var client = new System.Net.WebClient { Encoding = Encoding.UTF8 })
+            using (var client = new WebClient { Encoding = Encoding.UTF8 })
             {
                 return await client.DownloadStringTaskAsync(url);
             }
