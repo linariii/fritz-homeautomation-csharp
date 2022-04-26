@@ -23,7 +23,10 @@ jobs:
     
     - name: Build the Solution
       run: msbuild Fritz.HomeAutomation.sln /p:Configuration=Release
-    
+     
+    - name: Test
+      run: dotnet test --no-build --verbosity normal
+     
     - name: release
       uses: actions/create-release@v1
       id: create_release
