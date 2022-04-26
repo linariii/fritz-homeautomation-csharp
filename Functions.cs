@@ -13,71 +13,71 @@ namespace Fritz.HomeAutomation
         /// <summary>
         /// Bit 2: Licht/Lampe
         /// </summary>
-        Light = 4,
+        Light = 1 << 2,
 
         /// <summary>
         /// Bit 4: Alarm-Sensor
         /// </summary>
-        Alarm = 16,
+        Alarm = 1 << 4,
 
         /// <summary>
         /// Bit 5: AVM-Button
         /// </summary>
-        Button = 32,
+        Button = 1 << 5,
 
         /// <summary>
         /// Bit 6: Heizkörperregler
         /// </summary>
-        Thermostat = 64,
+        Thermostat = 1 << 6,
 
         /// <summary>
         /// Bit 7: Energie Messgerät
         /// </summary>
-        EnergyMeter = 128,
+        EnergyMeter = 1 << 7,
 
         /// <summary>
         /// Bit 8: Temperatursensor
         /// </summary>
-        TemperatureSensor = 256,
+        TemperatureSensor = 1 << 8,
 
         /// <summary>
         /// Bit 9: Schaltsteckdose
         /// </summary>
-        Outlet = 512,
+        Outlet = 1 << 9,
 
         /// <summary>
         /// Bit 10: AVM DECT Repeater
         /// </summary>
-        DectRepeater = 1024,
+        DectRepeater = 1 << 10,
 
         /// <summary>
         /// Bit 11: Mikrofon
         /// </summary>
-        Microfone = 2048,
+        Microfone = 1 << 11,
 
         /// <summary>
         /// Bit 13: HAN-FUN-Unit
         /// </summary>
-        HanFunUnit = 8192,
+        HanFunUnit = 1 << 13,
 
         /// <summary>
         /// Bit 15: an-/ausschaltbares Gerät/Steckdose/Lampe/Aktor
         /// </summary>
-        SwitchControl = 32768,
+        SwitchControl = 1 << 15,
 
         /// <summary>
         /// Bit 16: Gerät mit einstellbarem Dimm-, Höhen- bzw. Niveau-Level
         /// </summary>
-        LevelControl = 65536,
+        LevelControl = 1 << 16,
 
         /// <summary>
         /// Bit 17: Lampe mit einstellbarer Farbe/Farbtemperatur
         /// </summary>
-        ColorControl = 131072,
+        ColorControl = 1 << 17,
 
         /// <summary>
         /// Bit 18: Rollladen(Blind) - hoch, runter, stop und level 0% bis 100 %
         /// </summary>
-        Shutter = 262144
+        Shutter = 1 << 18
 	}
 }
