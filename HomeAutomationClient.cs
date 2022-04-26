@@ -13,6 +13,12 @@ namespace Fritz.HomeAutomation
     public class HomeAutomationClient
     {
         private string _baseUrl;
+        private const int MaxDuration = 1440; //24h
+        private const int MinDuration = 1; //1 minute
+        private const int MinTemp = 8;
+        private const int MaxTemp = 28;
+        private const int TempOn = 254;
+        private const int TempOff = 253;
 
         public string BaseUrl
         {
@@ -644,10 +650,10 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrWhiteSpace(ain))
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
-            if (duration <= 0)
+            if (duration < MinDuration)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} musst be at least one minute", nameof(duration));
 
-            if (duration > 14440)
+            if (duration > MaxDuration)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} cannot exceed 24 hours", nameof(duration));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrwindowopen", ain, $"endtimestamp={TimeToApi(duration)}"));
@@ -702,11 +708,11 @@ namespace Fritz.HomeAutomation
 
         private long TimeToApi(int minutes)
         {
-            if (minutes <= 0)
-                return 0;
+            if (minutes < MinDuration)
+                return MinDuration;
 
-            if (minutes > 1440) //24h
-                minutes = 1440;
+            if (minutes > MaxDuration)
+                minutes = MaxDuration;
 
             var dateTime = DateTime.Now.AddMinutes(minutes);
 
@@ -715,22 +721,19 @@ namespace Fritz.HomeAutomation
 
         private int? TempToApi(string temperature)
         {
-            const int minTemp = 8;
-            const int maxTemp = 28;
-
             if (string.IsNullOrWhiteSpace(temperature))
                 return null;
 
             if (temperature == "on")
-                return 254;
+                return TempOn;
 
             if (temperature == "off")
-                return 253;
+                return TempOff;
 
             if (!double.TryParse(temperature.Replace(" °C", ""), out var val))
                 return null;
 
-            return (int)Math.Round(Math.Min(Math.Max(val, minTemp), maxTemp), 0) * 2;
+            return (int)Math.Round(Math.Min(Math.Max(val, MinTemp), MaxTemp), 0) * 2;
         }
 
         private string ApiToTemp(string temperature)
@@ -741,10 +744,10 @@ namespace Fritz.HomeAutomation
             if (!int.TryParse(temperature, out var val))
                 return null;
 
-            if (val == 254)
+            if (val == TempOn)
                 return "on";
 
-            if (val == 253)
+            if (val == TempOff)
                 return "off";
 
             var number = (double)val;
