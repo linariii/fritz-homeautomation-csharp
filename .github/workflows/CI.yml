@@ -26,4 +26,4 @@ jobs:
       run: msbuild Fritz.HomeAutomation.sln /p:Configuration=Release
      
     - name: Test
-      run: dotnet test --verbosity normal
+      run: dotnet test --configuration Release --verbosity normal
