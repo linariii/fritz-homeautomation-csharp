@@ -59,7 +59,6 @@ namespace Fritz.HomeAutomation
             result = await DownloadString($"{BaseUrl}/login_sid.lua?username={username}&response={response}");
             sessionInfo = result.Deserialize<SessionInfo>();
             return sessionInfo?.Sid;
-
         }
 
         /// <summary>
@@ -125,7 +124,6 @@ namespace Fritz.HomeAutomation
             var devices = await GetDevices(sid);
             return devices?.Where(d => d.Functions.HasValue && d.Functions.Value.HasFlag(filter)).ToList();
         }
-
 
         /// <summary>
         /// Determines switching state of the outlet
@@ -438,7 +436,6 @@ namespace Fritz.HomeAutomation
             return string.IsNullOrEmpty(response)
                 ? null
                 : response.Deserialize<Device>();
-
         }
 
         /// <summary>
@@ -470,7 +467,6 @@ namespace Fritz.HomeAutomation
             return string.IsNullOrEmpty(response)
                 ? null
                 : response.Deserialize<DeviceStats>();
-
         }
 
         /// <summary>
