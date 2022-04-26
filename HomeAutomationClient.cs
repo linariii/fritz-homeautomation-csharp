@@ -363,7 +363,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> GetSwitchnName(string sid, string ain)
+        public async Task<string> GetSwitchName(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
