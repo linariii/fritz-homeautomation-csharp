@@ -15,6 +15,11 @@
 	<PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Fritz.HomeAutomation.Tests\**" />
+    <EmbeddedResource Remove="Fritz.HomeAutomation.Tests\**" />
+    <None Remove="Fritz.HomeAutomation.Tests\**" />
+  </ItemGroup>
+  <ItemGroup>
     <None Remove=".gitignore" />
   </ItemGroup>
   <ItemGroup>
