@@ -13,6 +13,9 @@
 	<Version>$(AssemblyVersion)</Version>
 	<RepositoryType>git</RepositoryType>
 	<PackageIcon>icon.png</PackageIcon>
+	<Description>C# implementation of the AVM Home Automation API</Description>
+	<SignAssembly>True</SignAssembly>
+	<GenerateDocumentationFile>True</GenerateDocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Compile Remove="Fritz.HomeAutomation.Tests\**" />
