@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
-    [XmlRoot("devicelist")]
+    [XmlRoot(ElementName = "devicelist")]
     public class DeviceList
     {
         [XmlElement("device")]

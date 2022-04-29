@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
-    [XmlType(AnonymousType = true)]
+    [XmlRoot(ElementName = "humidity")]
     public class DeviceHumidity
     {
         [XmlElement("rel_humidity")]

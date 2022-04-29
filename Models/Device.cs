@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
-    [XmlType(AnonymousType = true)]
+    [XmlRoot(ElementName = "device")]
     public class Device
     {
         [XmlElement("present")]
@@ -41,7 +41,7 @@ namespace Fritz.HomeAutomation.Models
         [XmlElement("button")]
         public List<DeviceButton> Buttons { get; set; }
 
-        [XmlElement("device")]
+        [XmlElement("hkr")]
         public DeviceHkr Hkr { get; set; }
 
         [XmlAttribute("identifier")]

@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 namespace Fritz.HomeAutomation.Models
 {
     [Serializable]
-    [XmlType(AnonymousType = true)]
+    [XmlRoot(ElementName = "nextchange")]
     public class DeviceHkrNextChange
     {
         [XmlElement("endperiod")]
