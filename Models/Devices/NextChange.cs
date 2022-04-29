@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Devices
 {
     [Serializable]
     [XmlRoot(ElementName = "nextchange")]
-    public class DeviceHkrNextChange
+    public class NextChange
     {
         [XmlElement("endperiod")]
-        public int EndPeriod { get; set; }
+        public ulong EndPeriod { get; set; }
 
         [XmlElement("tchange")]
-        public int TChange { get; set; }
+        public uint TargetTemperature { get; set; }
     }
 }

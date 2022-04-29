@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Devices
 {
     [Serializable]
     [XmlRoot(ElementName = "powermeter")]
-    public class DevicePowerMeter
+    public class PowerMeter
     {
         [XmlElement("voltage")]
-        public int Voltage { get; set; }
+        public uint Voltage { get; set; }
 
         [XmlElement("power")]
-        public int Power { get; set; }
+        public uint Power { get; set; }
 
         [XmlElement("energy")]
-        public int Energy { get; set; }
+        public uint Energy { get; set; }
     }
 }

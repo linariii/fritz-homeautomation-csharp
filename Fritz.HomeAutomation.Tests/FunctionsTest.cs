@@ -1,3 +1,4 @@
+using Fritz.HomeAutomation.Enums;
 using Xunit;
 
 namespace Fritz.HomeAutomation.Tests

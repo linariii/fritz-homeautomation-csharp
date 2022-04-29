@@ -1,11 +1,11 @@
 ﻿using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Stats
 {
     [XmlRoot(ElementName = "power")]
     public class Power
     {
         [XmlElement(ElementName = "stats")]
-        public Stats Stats { get; set; }
+        public Statistics Statistics { get; set; }
     }
 }

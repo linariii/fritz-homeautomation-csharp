@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Devices
 {
     [Serializable]
     [XmlRoot(ElementName = "humidity")]
-    public class DeviceHumidity
+    public class Humidity
     {
         [XmlElement("rel_humidity")]
-        public int RelHumidity { get; set; }
+        public uint RelativeHumidity { get; set; }
     }
 }

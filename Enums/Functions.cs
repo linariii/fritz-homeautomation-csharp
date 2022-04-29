@@ -1,22 +1,22 @@
 ﻿using System;
 
-namespace Fritz.HomeAutomation
+namespace Fritz.HomeAutomation.Enums
 {
     [Flags]
     public enum Functions
     {
         /// <summary>
-        /// Bit 0: HAN-FUN Gerät
+        /// Bit 0: HanFun
         /// </summary>
         HanFun = 0,
 
         /// <summary>
-        /// Bit 2: Licht/Lampe
+        /// Bit 2: Light
         /// </summary>
         Light = 1 << 2,
 
         /// <summary>
-        /// Bit 4: Alarm-Sensor
+        /// Bit 4: Alarm
         /// </summary>
         Alarm = 1 << 4,
 
@@ -26,22 +26,22 @@ namespace Fritz.HomeAutomation
         Button = 1 << 5,
 
         /// <summary>
-        /// Bit 6: Heizkörperregler
+        /// Bit 6: Thermostat
         /// </summary>
         Thermostat = 1 << 6,
 
         /// <summary>
-        /// Bit 7: Energie Messgerät
+        /// Bit 7: EnergyMeter
         /// </summary>
         EnergyMeter = 1 << 7,
 
         /// <summary>
-        /// Bit 8: Temperatursensor
+        /// Bit 8: Temperature sensor
         /// </summary>
         TemperatureSensor = 1 << 8,
 
         /// <summary>
-        /// Bit 9: Schaltsteckdose
+        /// Bit 9: Outlet
         /// </summary>
         Outlet = 1 << 9,
 
@@ -51,32 +51,32 @@ namespace Fritz.HomeAutomation
         DectRepeater = 1 << 10,
 
         /// <summary>
-        /// Bit 11: Mikrofon
+        /// Bit 11: Microfone
         /// </summary>
         Microfone = 1 << 11,
 
         /// <summary>
-        /// Bit 13: HAN-FUN-Unit
+        /// Bit 13: HanFunUnit
         /// </summary>
         HanFunUnit = 1 << 13,
 
         /// <summary>
-        /// Bit 15: an-/ausschaltbares Gerät/Steckdose/Lampe/Aktor
+        /// Bit 15: Switch control
         /// </summary>
         SwitchControl = 1 << 15,
 
         /// <summary>
-        /// Bit 16: Gerät mit einstellbarem Dimm-, Höhen- bzw. Niveau-Level
+        /// Bit 16: Level control
         /// </summary>
         LevelControl = 1 << 16,
 
         /// <summary>
-        /// Bit 17: Lampe mit einstellbarer Farbe/Farbtemperatur
+        /// Bit 17: Color control
         /// </summary>
         ColorControl = 1 << 17,
 
         /// <summary>
-        /// Bit 18: Rollladen(Blind) - hoch, runter, stop und level 0% bis 100 %
+        /// Bit 18: Shutter
         /// </summary>
         Shutter = 1 << 18
 	}

@@ -7,6 +7,7 @@ using Fritz.HomeAutomation.Models;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Fritz.HomeAutomation.Enums;
 
 namespace Fritz.HomeAutomation
 {
@@ -58,13 +59,13 @@ namespace Fritz.HomeAutomation
                 return null;
 
             var sessionInfo = result.Deserialize<SessionInfo>();
-            if (sessionInfo.Sid != "0000000000000000")
-                return sessionInfo.Sid;
+            if (sessionInfo.SessionId != "0000000000000000")
+                return sessionInfo.SessionId;
 
             var response = sessionInfo.Challenge + "-" + GetMD5Hash(sessionInfo.Challenge + "-" + password);
             result = await DownloadString($"{BaseUrl}/login_sid.lua?username={username}&response={response}");
             sessionInfo = result.Deserialize<SessionInfo>();
-            return sessionInfo?.Sid;
+            return sessionInfo?.SessionId;
         }
 
         /// <summary>

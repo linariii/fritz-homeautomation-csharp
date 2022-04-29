@@ -1,4 +1,5 @@
 ﻿using System.Xml.Serialization;
+using Fritz.HomeAutomation.Models.Stats;
 
 namespace Fritz.HomeAutomation.Models
 {

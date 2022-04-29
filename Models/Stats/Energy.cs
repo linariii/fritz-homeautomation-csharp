@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Stats
 {
     [XmlRoot(ElementName = "energy")]
     public class Energy
     {
         [XmlElement(ElementName = "stats")]
-        public List<Stats> Stats { get; set; }
+        public List<Statistics> Statistics { get; set; }
     }
 }

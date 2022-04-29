@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Fritz.HomeAutomation.Models.Session;
 
 namespace Fritz.HomeAutomation.Models
 {
@@ -9,13 +10,13 @@ namespace Fritz.HomeAutomation.Models
     public class SessionInfo
     {
         [XmlElement("SID")]
-        public string Sid { get; set; }
+        public string SessionId { get; set; }
 
         [XmlElement("Challenge")]
         public string Challenge { get; set; }
 
         [XmlElement("BlockTime")]
-        public byte BlockTime { get; set; }
+        public uint BlockTime { get; set; }
 
         [XmlElement("Rights")]
         public SessionInfoRights Rights { get; set; }

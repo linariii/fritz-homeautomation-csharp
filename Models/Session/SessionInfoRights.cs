@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Session
 {
     [Serializable]
     [XmlRoot(ElementName = "Rights")]
@@ -11,6 +11,6 @@ namespace Fritz.HomeAutomation.Models
         public string Name { get; set; }
 
         [XmlElement("Access")]
-        public int Access { get; set; }
+        public uint Access { get; set; }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Devices
 {
     [Serializable]
     [XmlRoot(ElementName = "temperature")]
-    public class DeviceTemperature
+    public class Temperature
     {
         [XmlElement("celsius")]
-        public int Celsius { get; set; }
+        public uint Celsius { get; set; }
 
         [XmlElement("offset")]
-        public int Offset { get; set; }
+        public uint Offset { get; set; }
     }
 }

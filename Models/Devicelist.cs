@@ -12,9 +12,9 @@ namespace Fritz.HomeAutomation.Models
         public List<Device> Devices { get; set; }
 
         [XmlAttribute("version")]
-        public int Version { get; set; }
+        public uint Version { get; set; }
 
         [XmlAttribute("fwversion")]
-        public double FwVersion { get; set; }
+        public string FirmwareVersion { get; set; }
     }
 }

@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Xml.Serialization;
+using Fritz.HomeAutomation.Enums;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Devices
 {
     [Serializable]
     [XmlRoot(ElementName = "simpleonoff")]
-    public class DeviceSimpleOnOff
+    public class SimpleOnOff
     {
         [XmlElement("state")]
-        public int State { get; set; }
+        public State State { get; set; }
     }
 }

@@ -1,9 +1,9 @@
 ﻿using System.Xml.Serialization;
 
-namespace Fritz.HomeAutomation.Models
+namespace Fritz.HomeAutomation.Models.Stats
 {
     [XmlRoot(ElementName = "stats")]
-    public class Stats
+    public class Statistics
     {
         [XmlAttribute(AttributeName = "count")]
         public string Count { get; set; }
