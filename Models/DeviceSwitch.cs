@@ -8,16 +8,16 @@ namespace Fritz.HomeAutomation.Models
     public class DeviceSwitch
     {
         [XmlElement("state")]
-        public byte State { get; set; }
+        public int State { get; set; }
 
         [XmlElement("mode")]
         public string Mode { get; set; }
 
         [XmlElement("lock")]
-        public byte Lock { get; set; }
+        public int Lock { get; set; }
 
         [XmlElement("devicelock")]
-        public byte DeviceLock { get; set; }
+        public int DeviceLock { get; set; }
     }
 
 }

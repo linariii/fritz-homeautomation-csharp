@@ -8,6 +8,6 @@ namespace Fritz.HomeAutomation.Models
     public class DeviceSimpleOnOff
     {
         [XmlElement("state")]
-        public byte State { get; set; }
+        public int State { get; set; }
     }
 }

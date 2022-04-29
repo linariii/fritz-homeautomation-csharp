@@ -8,9 +8,9 @@ namespace Fritz.HomeAutomation.Models
     public class DeviceTemperature
     {
         [XmlElement("celsius")]
-        public byte Celsius { get; set; }
+        public int Celsius { get; set; }
 
         [XmlElement("offset")]
-        public byte Offset { get; set; }
+        public int Offset { get; set; }
     }
 }

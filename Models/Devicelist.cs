@@ -15,6 +15,6 @@ namespace Fritz.HomeAutomation.Models
         public int Version { get; set; }
 
         [XmlAttribute("fwversion")]
-        public decimal FwVersion { get; set; }
+        public double FwVersion { get; set; }
     }
 }

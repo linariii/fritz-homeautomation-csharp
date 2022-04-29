@@ -9,10 +9,10 @@ namespace Fritz.HomeAutomation.Models
     public class Device
     {
         [XmlElement("present")]
-        public byte Present { get; set; }
+        public int Present { get; set; }
 
         [XmlElement("txbusy")]
-        public byte Txbusy { get; set; }
+        public int Txbusy { get; set; }
 
         [XmlElement("name")]
         public string Name { get; set; }
@@ -21,7 +21,7 @@ namespace Fritz.HomeAutomation.Models
         public int Battery { get; set; }
 
         [XmlElement("batterylow")]
-        public byte BatteryLow { get; set; }
+        public int BatteryLow { get; set; }
 
         [XmlElement("switch")]
         public DeviceSwitch Switch { get; set; }

@@ -8,6 +8,6 @@ namespace Fritz.HomeAutomation.Models
     public class DeviceHumidity
     {
         [XmlElement("rel_humidity")]
-        public byte RelHumidity { get; set; }
+        public int RelHumidity { get; set; }
     }
 }
