@@ -11,16 +11,26 @@ using Fritz.HomeAutomation.Utils;
 
 namespace Fritz.HomeAutomation
 {
+    /// <summary>
+    /// Client
+    /// </summary>
     public class HomeAutomationClient
     {
         private string _baseUrl;
 
+        /// <summary>
+        /// Get or set base url
+        /// </summary>
         public string BaseUrl
         {
             get => _baseUrl;
             set => _baseUrl = value.TrimEnd('/');
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="baseUrl">optional base url</param>
         public HomeAutomationClient(string baseUrl = "http://fritz.box")
         {
             BaseUrl = baseUrl;

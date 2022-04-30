@@ -3,8 +3,17 @@ using Fritz.HomeAutomation.Enums;
 
 namespace Fritz.HomeAutomation.Utils
 {
+    /// <summary>
+    /// Utils for temperature conversions
+    /// </summary>
     public class TemperatureUtils
     {
+        /// <summary>
+        /// Convert temperature and state to temperature code
+        /// </summary>
+        /// <param name="temperature">temperature</param>
+        /// <param name="state">state</param>
+        /// <returns>temperatureCode</returns>
         public static int? TemperatureToApi(double temperature, ThermostatState state)
         {
             if (state == ThermostatState.On)
@@ -16,6 +25,12 @@ namespace Fritz.HomeAutomation.Utils
             return (int)Math.Round(Math.Min(Math.Max(temperature, Constants.MinTemperature), Constants.MaxTemperature), 0) * 2;
         }
 
+        /// <summary>
+        /// Convert temperature code to temperature and state
+        /// </summary>
+        /// <param name="temperatureCode">code</param>
+        /// <param name="state">out state</param>
+        /// <returns>temperature</returns>
         public static double? ApiToTemperature(string temperatureCode, out ThermostatState state)
         {
             state = ThermostatState.Unknown;

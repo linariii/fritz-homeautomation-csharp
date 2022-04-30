@@ -2,21 +2,34 @@
 
 namespace Fritz.HomeAutomation.Utils
 {
+    /// <summary>
+    /// Utils for time conversions
+    /// </summary>
     public static class TimeUtils
     {
-        public static long TimeToApi(int minutes)
+        /// <summary>
+        /// Convert duration to linux timestamp
+        /// </summary>
+        /// <param name="duration">duration in duration</param>
+        /// <returns>Linux timestamp</returns>
+        public static long TimeToApi(int duration)
         {
-            if (minutes < Constants.MinDurationInMinutes)
+            if (duration < Constants.MinDurationInMinutes)
                 return Constants.MinDurationInMinutes;
 
-            if (minutes > Constants.MaxDurationInMinutes)
-                minutes = Constants.MaxDurationInMinutes;
+            if (duration > Constants.MaxDurationInMinutes)
+                duration = Constants.MaxDurationInMinutes;
 
-            var dateTime = DateTime.Now.AddMinutes(minutes);
+            var dateTime = DateTime.Now.AddMinutes(duration);
 
             return new DateTimeOffset(dateTime).ToUnixTimeSeconds();
         }
 
+        /// <summary>
+        /// Convert linux timestamp to datetime
+        /// </summary>
+        /// <param name="time">linux timestamp</param>
+        /// <returns>DateTime</returns>
         public static DateTime? ApiToDatetime(string time)
         {
             if (string.IsNullOrWhiteSpace(time))

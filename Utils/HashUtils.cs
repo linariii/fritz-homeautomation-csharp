@@ -3,9 +3,11 @@ using System.Text;
 
 namespace Fritz.HomeAutomation.Utils
 {
+    /// <summary>
+    /// HashUtils
+    /// </summary>
     public static class HashUtils
     {
-
         /// <summary>
         /// Create an MD5 hash for our authentication token.
         /// </summary>

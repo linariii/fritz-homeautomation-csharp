@@ -2,6 +2,9 @@
 
 namespace Fritz.HomeAutomation.Enums
 {
+    /// <summary>
+    /// Functions supported by the device
+    /// </summary>
     [Flags]
     public enum Functions
     {

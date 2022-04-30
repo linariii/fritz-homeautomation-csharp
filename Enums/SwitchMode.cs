@@ -3,20 +3,26 @@
 namespace Fritz.HomeAutomation.Enums
 {
     /// <summary>
-    /// Active state
+    /// Mode of the 
     /// </summary>
-    public enum Active
+    public enum SwitchMode
     {
         /// <summary>
-        /// Device is inactive
+        /// Device is off
         /// </summary>
         [XmlEnum(Name = "0")]
-        Inactive,
+        Off,
 
         /// <summary>
-        /// Device is active
+        /// Device is on
         /// </summary>
         [XmlEnum(Name = "1")]
-        Active
+        On,
+
+        /// <summary>
+        /// Device is in auto mode
+        /// </summary>
+        [XmlEnum(Name = "auto")]
+        Auto
     }
 }
