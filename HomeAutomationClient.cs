@@ -713,6 +713,89 @@ namespace Fritz.HomeAutomation
             return await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrtsoll", ain, $"param={TemperatureUtils.TemperatureToApi(temperature, state)}"));
         }
 
+        /// <summary>
+        /// Set level
+        /// </summary>
+        /// <param name="sid">Session id</param>
+        /// <param name="ain">Device identifier</param>
+        /// <param name="level">Level (0 = 0%; 255 = 100%)</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public async Task<string> SetLevel(string sid, string ain, byte level)
+        {
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setlevel", ain, $"level={level}"));
+        }
+
+        /// <summary>
+        /// Set level percent
+        /// </summary>
+        /// <param name="sid">Session id</param>
+        /// <param name="ain">Device identifier</param>
+        /// <param name="levelPercent">Level in percent (0 = 0%; 100 = 100%)</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public async Task<string> SetLevelPercentage(string sid, string ain, byte levelPercent)
+        {
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            if(levelPercent > 100)
+                throw new ArgumentException($"{nameof(levelPercent)} cannot exceed 100%", nameof(levelPercent)) ;
+
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setlevelpercentage", ain, $"level={levelPercent}"));
+        }
+
+        /// <summary>
+        /// Set blind
+        /// </summary>
+        /// <param name="sid">Session id</param>
+        /// <param name="ain">Device identifier</param>
+        /// <param name="command">Command</param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        public async Task<string> SetBlind(string sid, string ain, BlindCommand command)
+        {
+            if (sid == null)
+                throw new ArgumentNullException(nameof(sid));
+
+            if (string.IsNullOrWhiteSpace(sid))
+                throw new ArgumentException($"{nameof(sid)} cannot be empty", nameof(sid));
+
+            if (ain == null)
+                throw new ArgumentNullException(nameof(ain));
+
+            if (string.IsNullOrWhiteSpace(ain))
+                throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
+
+            var target = command.ToString().ToLowerInvariant();
+
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setblind", ain, $"target={target}"));
+        }
+
         private async Task<string> DownloadString(string url)
         {
             using (var client = new WebClient { Encoding = Encoding.UTF8 })
