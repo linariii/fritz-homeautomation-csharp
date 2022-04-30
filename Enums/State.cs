@@ -8,6 +8,9 @@ namespace Fritz.HomeAutomation.Enums
         Off,
 
         [XmlEnum(Name = "1")]
-        On
+        On,
+
+        [XmlEnum(Name = "inval")]
+        Unknown
     }
 }

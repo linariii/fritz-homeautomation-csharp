@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Xml.Serialization;
 using Fritz.HomeAutomation.Enums;
 using Fritz.HomeAutomation.Models.Devices;
+using SimpleOnOff = Fritz.HomeAutomation.Models.Devices.SimpleOnOff;
 
 namespace Fritz.HomeAutomation.Models
 {
@@ -35,10 +36,10 @@ namespace Fritz.HomeAutomation.Models
         public string Name { get; set; }
 
         [XmlElement("battery")]
-        public uint BatteryCharge { get; set; }
+        public uint? BatteryCharge { get; set; }
 
         [XmlElement("batterylow")]
-        public Battery BatteryState { get; set; }
+        public Battery? BatteryState { get; set; }
 
         [XmlElement("switch")]
         public Switch Switch { get; set; }
@@ -62,7 +63,7 @@ namespace Fritz.HomeAutomation.Models
         public Thermostat Thermostat { get; set; }
 
         [XmlAttribute("identifier")]
-        public string Identifier { get; set; }
+        public string Ain { get; set; }
 
         [XmlIgnore]
         public Functions? Functions => (Functions)FunctionBitMask;

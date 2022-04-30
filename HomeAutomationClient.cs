@@ -4,22 +4,16 @@ using System.Linq;
 using System.Net;
 using Fritz.HomeAutomation.Extensions;
 using Fritz.HomeAutomation.Models;
-using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Fritz.HomeAutomation.Enums;
+using Fritz.HomeAutomation.Utils;
 
 namespace Fritz.HomeAutomation
 {
     public class HomeAutomationClient
     {
         private string _baseUrl;
-        private const int MaxDuration = 1440; //24h
-        private const int MinDuration = 1; //1 minute
-        private const int MinTemp = 8;
-        private const int MaxTemp = 28;
-        private const int TempOn = 254;
-        private const int TempOff = 253;
 
         public string BaseUrl
         {
@@ -40,7 +34,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> GetSid(string username, string password)
+        public async Task<string> GetSessionId(string username, string password)
         {
             if (username == null)
                 throw new ArgumentNullException(nameof(username));
@@ -62,7 +56,7 @@ namespace Fritz.HomeAutomation
             if (sessionInfo.SessionId != "0000000000000000")
                 return sessionInfo.SessionId;
 
-            var response = sessionInfo.Challenge + "-" + GetMD5Hash(sessionInfo.Challenge + "-" + password);
+            var response = sessionInfo.Challenge + "-" + HashUtils.GetMD5Hash(sessionInfo.Challenge + "-" + password);
             result = await DownloadString($"{BaseUrl}/login_sid.lua?username={username}&response={response}");
             sessionInfo = result.Deserialize<SessionInfo>();
             return sessionInfo?.SessionId;
@@ -140,7 +134,7 @@ namespace Fritz.HomeAutomation
         /// <returns>0 = deactivated, 1 = activated</returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> GetSwitchState(string sid, string ain)
+        public async Task<State?> GetSwitchState(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -158,21 +152,20 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var switchState))
-                return null;
-
-            return switchState;
+            return !Enum.TryParse<State>(response, out var switchState)
+                ? State.Unknown
+                : switchState;
         }
 
         /// <summary>
         /// Turns on the outlet
         /// </summary>
         /// <param name="sid">Session ID</param>
-        /// <param name="ain">Device Identifier</param>
+        /// <param name="ain">Device Ain</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> SetSwitchOn(string sid, string ain)
+        public async Task<State?> SetSwitchOn(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -190,7 +183,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var switchState))
+            if (!Enum.TryParse<State>(response, out var switchState))
                 return null;
 
             return switchState;
@@ -200,11 +193,11 @@ namespace Fritz.HomeAutomation
         /// Determines connection status of the device
         /// </summary>
         /// <param name="sid">Session ID</param>
-        /// <param name="ain">Device Identifier</param>
+        /// <param name="ain">Device Ain</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> GetSwitchPresent(string sid, string ain)
+        public async Task<Present?> GetSwitchPresent(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -222,7 +215,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var switchState))
+            if (!Enum.TryParse<Present>(response, out var switchState))
                 return null;
 
             return switchState;
@@ -236,7 +229,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> SetSwitchOff(string sid, string ain)
+        public async Task<State?> SetSwitchOff(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -254,7 +247,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var switchState))
+            if (!Enum.TryParse<State>(response, out var switchState))
                 return null;
 
             return switchState;
@@ -268,7 +261,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> SetSwitchToggle(string sid, string ain)
+        public async Task<State?> SetSwitchToggle(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -286,7 +279,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var switchState))
+            if (!Enum.TryParse<State>(response, out var switchState))
                 return null;
 
             return switchState;
@@ -300,7 +293,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> GetSwitchPower(string sid, string ain)
+        public async Task<uint?> GetSwitchPower(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -318,7 +311,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var power))
+            if (!uint.TryParse(response, out var power))
                 return null;
 
             return power;
@@ -328,11 +321,11 @@ namespace Fritz.HomeAutomation
         /// Delivers the amount of energy energy taken from the outlet since initial start-up or reset of the energy statistics
         /// </summary>
         /// <param name="sid">Session ID</param>
-        /// <param name="ain">Device Identifier</param>
+        /// <param name="ain">Device Ain</param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<int?> GetSwitchEnergy(string sid, string ain)
+        public async Task<uint?> GetSwitchEnergy(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -350,7 +343,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!int.TryParse(response, out var power))
+            if (!uint.TryParse(response, out var power))
                 return null;
 
             return power;
@@ -390,7 +383,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<double?> GetTemperature(string sid, string ain)
+        public async Task<uint?> GetTemperature(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -408,7 +401,7 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrEmpty(response))
                 return null;
 
-            if (!double.TryParse(response, out var val))
+            if (!uint.TryParse(response, out var val))
                 return null;
 
             return val;
@@ -485,8 +478,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<string> SetSimpleOnOff(string sid, string ain, int state)
+        public async Task<string> SetSimpleOnOff(string sid, string ain, SimpleOnOff state)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -500,13 +492,9 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrWhiteSpace(ain))
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
-            if (state < 0)
-                throw new ArgumentOutOfRangeException($"{nameof(state)} musst be 0=off, 1=on or 2=toggle", nameof(state));
+            var val = (int)state;
 
-            if (state > 2)
-                throw new ArgumentOutOfRangeException($"{nameof(state)} musst be 0=off, 1=on or 2=toggle", nameof(state));
-
-            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setsimpleonoff", ain, $"onoff={state}"));
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "setsimpleonoff", ain, $"onoff={val}"));
         }
 
         /// <summary>
@@ -517,7 +505,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> GetTempTarget(string sid, string ain)
+        public async Task<TemperatureResult> GetTargetTemperature(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -532,9 +520,15 @@ namespace Fritz.HomeAutomation
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrtsoll", ain));
-            return string.IsNullOrEmpty(response)
-                ? null
-                : ApiToTemp(response);
+            if (string.IsNullOrEmpty(response))
+                return new TemperatureResult { State = ThermostatState.Unknown, Temperature = null };
+
+            var temperature = TemperatureUtils.ApiToTemperature(response, out var state);
+            return new TemperatureResult
+            {
+                State = state,
+                Temperature = temperature
+            };
         }
 
         /// <summary>
@@ -545,7 +539,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> GetTempComfort(string sid, string ain)
+        public async Task<TemperatureResult> GetComfortTemperature(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -560,9 +554,15 @@ namespace Fritz.HomeAutomation
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrkomfort", ain));
-            return string.IsNullOrEmpty(response)
-                ? null
-                : ApiToTemp(response);
+            if (string.IsNullOrEmpty(response))
+                return new TemperatureResult { State = ThermostatState.Unknown, Temperature = null };
+
+            var temperature = TemperatureUtils.ApiToTemperature(response, out var state);
+            return new TemperatureResult
+            {
+                State = state,
+                Temperature = temperature
+            };
         }
 
         /// <summary>
@@ -573,7 +573,7 @@ namespace Fritz.HomeAutomation
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> GetTempNigh(string sid, string ain)
+        public async Task<TemperatureResult> GetEconomyTemperature(string sid, string ain)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -588,9 +588,15 @@ namespace Fritz.HomeAutomation
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
             var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "gethkrabsenk", ain));
-            return string.IsNullOrEmpty(response)
-                ? null
-                : ApiToTemp(response);
+            if (string.IsNullOrEmpty(response))
+                return new TemperatureResult { State = ThermostatState.Unknown, Temperature = null };
+
+            var temperature = TemperatureUtils.ApiToTemperature(response, out var state);
+            return new TemperatureResult
+            {
+                State = state,
+                Temperature = temperature
+            };
         }
 
         /// <summary>
@@ -603,7 +609,7 @@ namespace Fritz.HomeAutomation
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<DateTime?> SetHkrBoost(string sid, string ain, int duration)
+        public async Task<DateTime?> SetThermostatBoost(string sid, string ain, int duration)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -617,14 +623,14 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrWhiteSpace(ain))
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
-            if (duration <= 0)
+            if (duration < Constants.MinDurationInMinutes)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} musst be at least one minute", nameof(duration));
 
-            if (duration > 14440)
+            if (duration > Constants.MaxDurationInMinutes)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} cannot exceed 24 hours", nameof(duration));
 
-            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrboost", ain, $"endtimestamp={TimeToApi(duration)}"));
-            return ApiToDatetime(response);
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrboost", ain, $"endtimestamp={TimeUtils.TimeToApi(duration)}"));
+            return TimeUtils.ApiToDatetime(response);
         }
 
         /// <summary>
@@ -637,7 +643,7 @@ namespace Fritz.HomeAutomation
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
         /// <exception cref="ArgumentOutOfRangeException"></exception>
-        public async Task<DateTime?> SetHkrWindowOpen(string sid, string ain, int duration)
+        public async Task<DateTime?> SetThermostatWindowOpen(string sid, string ain, int duration)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -651,14 +657,14 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrWhiteSpace(ain))
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
-            if (duration < MinDuration)
+            if (duration < Constants.MinDurationInMinutes)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} musst be at least one minute", nameof(duration));
 
-            if (duration > MaxDuration)
+            if (duration > Constants.MaxDurationInMinutes)
                 throw new ArgumentOutOfRangeException($"{nameof(duration)} cannot exceed 24 hours", nameof(duration));
 
-            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrwindowopen", ain, $"endtimestamp={TimeToApi(duration)}"));
-            return ApiToDatetime(response);
+            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrwindowopen", ain, $"endtimestamp={TimeUtils.TimeToApi(duration)}"));
+            return TimeUtils.ApiToDatetime(response);
         }
 
         /// <summary>
@@ -667,10 +673,11 @@ namespace Fritz.HomeAutomation
         /// <param name="sid">Session ID</param>
         /// <param name="ain">Device identifier</param>
         /// <param name="temperature"></param>
+        /// <param name="state"></param>
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="ArgumentException"></exception>
-        public async Task<string> SetTempTarget(string sid, string ain, string temperature)
+        public async Task<string> SetTargetTemperature(string sid, string ain, double temperature, ThermostatState state)
         {
             if (sid == null)
                 throw new ArgumentNullException(nameof(sid));
@@ -684,92 +691,16 @@ namespace Fritz.HomeAutomation
             if (string.IsNullOrWhiteSpace(ain))
                 throw new ArgumentException($"{nameof(ain)} cannot be empty", nameof(ain));
 
-            if (temperature == null)
-                throw new ArgumentNullException(nameof(temperature));
+            if (state == ThermostatState.Unknown)
+                throw new ArgumentException($"{nameof(state)} cannot be unknown", nameof(ain));
 
-            if (string.IsNullOrWhiteSpace(temperature))
-                throw new ArgumentException($"{nameof(temperature)} cannot be empty", nameof(temperature));
+            if (state == ThermostatState.Temperature && temperature < Constants.MinTemperature)
+                throw new ArgumentException($"{nameof(temperature)} cannot be lower than {Constants.MinTemperature}°C", nameof(ain));
 
-            var response = await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrtsoll", ain, $"param={TempToApi(temperature)}"));
-            return string.IsNullOrEmpty(response)
-                ? null
-                : ApiToTemp(response);
-        }
+            if (state == ThermostatState.Temperature && temperature > Constants.MaxTemperature)
+                throw new ArgumentException($"{nameof(temperature)} cannot be higher than {Constants.MaxTemperature}°C", nameof(ain));
 
-        private DateTime? ApiToDatetime(string time)
-        {
-            if (string.IsNullOrWhiteSpace(time))
-                return null;
-
-            if (!long.TryParse(time, out var val))
-                return null;
-
-            return DateTimeOffset.FromUnixTimeSeconds(val).LocalDateTime;
-        }
-
-        private long TimeToApi(int minutes)
-        {
-            if (minutes < MinDuration)
-                return MinDuration;
-
-            if (minutes > MaxDuration)
-                minutes = MaxDuration;
-
-            var dateTime = DateTime.Now.AddMinutes(minutes);
-
-            return new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-        }
-
-        private int? TempToApi(string temperature)
-        {
-            if (string.IsNullOrWhiteSpace(temperature))
-                return null;
-
-            if (temperature == "on")
-                return TempOn;
-
-            if (temperature == "off")
-                return TempOff;
-
-            if (!double.TryParse(temperature.Replace(" °C", ""), out var val))
-                return null;
-
-            return (int)Math.Round(Math.Min(Math.Max(val, MinTemp), MaxTemp), 0) * 2;
-        }
-
-        private string ApiToTemp(string temperature)
-        {
-            if (string.IsNullOrWhiteSpace(temperature))
-                return null;
-
-            if (!int.TryParse(temperature, out var val))
-                return null;
-
-            if (val == TempOn)
-                return "on";
-
-            if (val == TempOff)
-                return "off";
-
-            var number = (double)val;
-            return $"{number / 2} °C";
-        }
-
-        /// <summary>
-        /// Create an MD5 hash for our authentication token.
-        /// </summary>
-        /// <param name="input"></param>
-        /// <returns>MD5 hash</returns>
-        private string GetMD5Hash(string input)
-        {
-            var md5Hasher = MD5.Create();
-            var hash = md5Hasher.ComputeHash(Encoding.Unicode.GetBytes(input));
-            var sb = new StringBuilder();
-            foreach (var b in hash)
-            {
-                sb.Append(b.ToString("x2"));
-            }
-            return sb.ToString();
+            return await DownloadString(GetHomeAutoSwitchUrl(sid, "sethkrtsoll", ain, $"param={TemperatureUtils.TemperatureToApi(temperature, state)}"));
         }
 
         private async Task<string> DownloadString(string url)
