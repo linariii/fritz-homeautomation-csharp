@@ -7,7 +7,7 @@
 	<TargetFrameworks>net472;netstandard2.0;net48;netstandard2.1;net47;net471;net46</TargetFrameworks>
 	<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	<PackageReadmeFile>README.md</PackageReadmeFile>
-	<AssemblyVersion>1.1</AssemblyVersion>
+	<AssemblyVersion>1.1.0.1</AssemblyVersion>
 	<FileVersion>$(AssemblyVersion)</FileVersion>
 	<PackageLicenseFile>LICENSE</PackageLicenseFile>
 	<Version>$(AssemblyVersion)</Version>
