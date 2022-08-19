@@ -14,6 +14,6 @@ namespace Fritz.HomeAutomation.Models.Devices
         /// relative humidity
         /// </summary>
         [XmlElement("rel_humidity")]
-        public uint RelativeHumidity { get; set; }
+        public int RelativeHumidity { get; set; }
     }
 }

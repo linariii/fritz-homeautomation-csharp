@@ -20,7 +20,7 @@ namespace Fritz.HomeAutomation.Models.Devices
         /// last pressed timestamp
         /// </summary>
         [XmlElement("lastpressedtimestamp")]
-        public ulong LastPressedTimestamp { get; set; }
+        public string LastPressedTimestamp { get; set; }
 
         /// <summary>
         /// Identifier
